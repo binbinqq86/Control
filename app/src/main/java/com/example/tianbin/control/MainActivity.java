@@ -12,14 +12,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.net.Socket;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
     private static final String TAG = "MainActivity";
@@ -66,11 +60,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (TextUtils.isEmpty(etIp.getText().toString())
-                        || TextUtils.isEmpty(etPort.getText().toString())
-//                        ||TextUtils.isEmpty(etId.getText().toString())
-//                        ||TextUtils.isEmpty(etCmd.getText().toString())
-                        ) {
+                if (TextUtils.isEmpty(etIp.getText().toString()) || TextUtils.isEmpty(etPort.getText().toString())) {
                     return;
                 }
                 if (client.isConnected()) {
