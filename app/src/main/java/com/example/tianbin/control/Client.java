@@ -243,4 +243,32 @@ public class Client {
         }
 
     }
+
+    /**
+     * 查询输入状态
+     * @return
+     */
+    public String query() {
+        try {
+            // 输出
+            OutputStream out = socket.getOutputStream();
+            // 输入
+            InputStream input = socket.getInputStream();
+
+            out.write(("RELAY-GET_INPUT-"+ (++packNum)).getBytes());
+            Thread.sleep(100);
+            out.flush();
+            byte b[] = new byte[64];// 接受的指令的长度
+            int len = 0;
+            len = input.read(b);
+            // 打印继电器的反馈消息
+            String str = new String(b, 0, len);
+            Log.e(TAG, "RELAY-GET_INPUT-= " + str);
+            return str;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "failure";
+        }
+
+    }
 }

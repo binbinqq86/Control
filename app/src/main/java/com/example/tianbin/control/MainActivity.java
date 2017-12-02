@@ -107,6 +107,12 @@ public class MainActivity extends BaseActivity implements CompoundButton.OnCheck
                         Log.e(TAG, s3);
                         sb.append(s3 + "\n\n");
                         mHandler.sendEmptyMessage(0);
+
+                        //查询输入状态
+                        String str=client.query();
+                        Log.e(TAG, "query: "+str );
+                        sb.append(str + "\n\n");
+                        mHandler.sendEmptyMessage(0);
                     }
                 });
             }
