@@ -1,5 +1,6 @@
 package com.example.tianbin.control;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -15,16 +16,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
+public class MainActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
     private static final String TAG = "MainActivity";
 
-    private Client client;
     private EditText etIp;
     private EditText etPort;
     private EditText etId;
     private EditText etCmd;
     private TextView tvStatus;
-    private Button bt;
+    private Button bt,btDj;
     private StringBuffer sb;
     private Handler mHandler = new Handler(Looper.getMainLooper()) {
         @Override
@@ -57,6 +57,12 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
     }
 
     private void initListeners() {
+        btDj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,ElectricMachineActivity.class));
+            }
+        });
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
                     Toast.makeText(MainActivity.this, "设备已连接...", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                new Thread(){
+                executorService.submit(new Runnable() {
                     @Override
                     public void run() {
                         sb.delete(0, sb.length());
@@ -102,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
                         sb.append(s3 + "\n\n");
                         mHandler.sendEmptyMessage(0);
                     }
-                }.start();
+                });
             }
         });
         rb1.setOnCheckedChangeListener(this);
@@ -117,7 +123,6 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
 
     private void initVariables() {
         sb = new StringBuffer();
-        client = Client.getInstance();
     }
 
     private void initView() {
@@ -127,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         etCmd = (EditText) findViewById(R.id.et_cmd);
         tvStatus = (TextView) findViewById(R.id.tv_status);
         bt = (Button) findViewById(R.id.bt);
+        btDj = (Button) findViewById(R.id.bt_dj);
         rb1 = (CheckBox) findViewById(R.id.rb1);
         rb2 = (CheckBox) findViewById(R.id.rb2);
         rb3 = (CheckBox) findViewById(R.id.rb3);
@@ -168,15 +174,14 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
                 break;
         }
         final String idf=idTemp;
-        new Thread(){
+        executorService.submit(new Runnable() {
             @Override
             public void run() {
-                super.run();
                 String res="set: id="+idf+",status="+str+",result="+client.set(idf,str);
                 Log.e(TAG, res );
                 sb.append(res+"\n\n");
                 mHandler.sendEmptyMessage(0);
             }
-        }.start();
+        });
     }
 }

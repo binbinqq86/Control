@@ -74,6 +74,7 @@ public class Client {
             Log.e(TAG, "setAll: RELAY-SET-1=" + s);
             return s;
         } catch (Exception e) {
+            Log.e(TAG, "setAll: eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee======"+e.getMessage() );
             e.printStackTrace();
         }
         return "setAll failure";
