@@ -174,7 +174,7 @@ public class Client {
             for (int i = 0; i < stringRes.length(); i++) {
                 arr[i] = String.valueOf(stringRes.charAt(stringRes.length() - (i + 1)));
             }
-            return arr;
+            return arr;//arr从0-8代表二进制由低到高的八位
 //            return num;//直接返回十进制也可以
         } catch (Exception e) {
             e.printStackTrace();

@@ -162,7 +162,7 @@ public class ElectricMachineActivity extends BaseActivity {
             @Override
             public void run() {
                 read();
-                List<Integer> list = new ArrayList<>();//此集合中第0个元素代表的也是二进制的最高位
+                List<Integer> list = new ArrayList<>();//此集合中第0个元素代表的是二进制的最高位，与statusList相反
                 for (int i = 0; i < 8; i++) {
                     if (i == key1) {
                         list.add(value1);
